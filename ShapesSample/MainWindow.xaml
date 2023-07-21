@@ -1,0 +1,46 @@
+﻿<Window x:Class="ShapesSample.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:v="clr-namespace:ShapesSample.ViewModels"
+        xmlns:local="clr-namespace:ShapesSample"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800" ResizeMode="NoResize">
+    <Window.DataContext>
+        <v:MainViewModel/>
+    </Window.DataContext>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="150"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <StackPanel Margin="10">
+            <ComboBox ItemsSource="{Binding ShapesCreators}" SelectedItem="{Binding SelectedShapeCreator}">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Name, Mode=OneWay}"/>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+            <DockPanel>
+                <TextBlock Text="Размер"/>
+                <TextBox Text="{Binding ShapeLength}"/>
+            </DockPanel>
+            <Button Content="Нарисовать " Command="{Binding DrawSelectedShape}" />
+        </StackPanel>
+
+        <ListBox ItemsSource="{Binding Shapes}" Grid.Column="1" Margin="10">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <Canvas Height="100" Width="100" Loaded="Canvas_Loaded" DataContext="{Binding}">
+                        </Canvas>
+                        <TextBlock Text="{Binding Name, Mode=OneWay}" VerticalAlignment="Center"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+
+    </Grid>
+</Window>
